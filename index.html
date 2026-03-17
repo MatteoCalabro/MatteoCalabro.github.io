@@ -215,11 +215,12 @@
       <button class="read-more-btn">Read more →</button>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" onclick="openRiscvModal()">
       <div class="project-year">TUM · Grade 1.1</div>
       <div class="project-title">RISC-V Processor Design</div>
-      <p class="project-desc">Implemented a custom RISC-V CPU entirely in VHDL, covering the full processor pipeline architecture with functional verification and performance validation.</p>
+      <p class="project-desc">Custom RISC-V CPU implemented in VHDL by a team of 4, following a reduced ISA specification. Covers a partially pipelined datapath, FSM-based control unit, memory interface, and opcode procedures.</p>
       <div class="project-tags"><span class="tag">VHDL</span><span class="tag">RISC-V</span><span class="tag">CPU Design</span></div>
+      <button class="read-more-btn">Read more →</button>
     </div>
 
     <div class="project-card">
@@ -310,6 +311,46 @@
   <div class="f-links"><a href="mailto:matteo.calabro@tum.de">Email</a><a href="#">LinkedIn</a></div>
   <div class="f-copy">© 2026 Matteo Calabrò</div>
 </footer>
+
+<!-- ===== RISC-V MODAL ===== -->
+<div class="modal-overlay" id="riscvModalOverlay" onclick="closeRiscvModalOutside(event)">
+<div class="modal" id="riscvModalBox">
+  <button class="modal-close" onclick="closeRiscvModal()">✕</button>
+
+  <div class="modal-label">Team Project · TUM · 4 Students</div>
+  <h2>RISC-V Processor Design</h2>
+  <div class="modal-meta">Grade: 1.1 &nbsp;·&nbsp; VHDL &nbsp;·&nbsp;
+    <a href="https://drive.google.com/file/d/1lR9B8-5rl9ogA8JlXSyZOqDmCMzS04tM/view?usp=sharing" target="_blank" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent2);">View ISA Specification ↗</a>
+  </div>
+
+  <h3>Overview</h3>
+  <p>A fully functional CPU was designed and implemented in VHDL by a group of four students, strictly following a reduced RISC-V Instruction Set Architecture specification. The processor features a <strong>partially pipelined architecture</strong> — starting from a single-cycle baseline and progressively introducing pipelining — with a clean separation between the datapath and the control unit.</p>
+
+  <!-- Architecture diagram -->
+  <div class="diagram-wrap" style="background:#f0ede8;">
+    <img src="riscv-arch.png" id="riscvDiagram" style="width:100%;border-radius:2px;" alt="RISC-V processor architecture diagram"/>
+    <div class="diagram-caption">System architecture: Datapath (ALU, Register File, Flags), Controller with FSM-based instruction decode, and Memory interface with input/output devices.</div>
+  </div>
+
+  <h3>Architecture</h3>
+  <p>The processor is structured around two main blocks. The <strong>Datapath</strong> contains the ALU, forwarding control logic (FC), a register file, and a flags register for condition tracking. The <strong>Control Unit</strong> handles instruction fetch and decode (ID), program counter management (PC with incrementer), address generation, and a central FSM that sequences all control signals across the execution pipeline.</p>
+  <p>External to the core, the design interfaces with a <strong>Memory</strong> module and separate <strong>Input/Output devices</strong> through a multiplexed bus — a realistic system-level integration that goes beyond a bare CPU core.</p>
+
+  <h3>Implementation Approach</h3>
+  <p>A key design decision was encoding each ISA opcode as a dedicated <strong>VHDL procedure</strong>. Rather than implementing instruction behavior through large case statements or inline signal assignments, each operation is encapsulated as a self-contained procedure call within the control FSM. This approach significantly improves readability, keeps the code modular, and makes it straightforward to add or modify individual instructions without touching unrelated logic.</p>
+
+  <div class="highlight">
+    Each instruction in the reduced ISA maps to a named VHDL procedure — separating the <em>what</em> (instruction semantics) from the <em>how</em> (FSM sequencing), resulting in clean, maintainable RTL code.
+  </div>
+
+  <h3>My Contribution</h3>
+  <p>Within the four-person team, my focus was on three areas. I designed and implemented the <strong>memory interface</strong> — managing the read/write handshake between the CPU and the external memory module, including address multiplexing and data bus control. I also implemented the <strong>VHDL procedure library for the ISA opcodes</strong>, translating the instruction specification directly into synthesizable RTL. Finally, I contributed to the <strong>integration</strong> of the individual components built by the team, resolving interface mismatches and ensuring the full system functioned correctly end-to-end.</p>
+
+  <div style="margin-top:1.5rem;">
+    <span class="tag">VHDL</span><span class="tag">RISC-V</span><span class="tag">CPU Datapath</span><span class="tag">FSM Control</span><span class="tag">Memory Interface</span><span class="tag">RTL Design</span>
+  </div>
+</div>
+</div>
 
 <!-- ===== MODAL ===== -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
@@ -494,7 +535,19 @@
   function closeModalOutside(e) {
     if (e.target === document.getElementById('modalOverlay')) closeModal();
   }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  function openRiscvModal() {
+    document.getElementById('riscvModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeRiscvModal() {
+    document.getElementById('riscvModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeRiscvModalOutside(e) {
+    if (e.target === document.getElementById('riscvModalOverlay')) closeRiscvModal();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeRiscvModal(); } });
+
 </script>
 
 </body>
