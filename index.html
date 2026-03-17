@@ -204,7 +204,7 @@
   <h2>Academic Projects</h2>
   <div class="projects-grid">
 
-    <!-- PROJECT 1 — DETAILED -->
+    <!-- PROJECT 1 — PCU -->
     <div class="project-card" onclick="openModal()">
       <div class="project-year">2025 · Bachelor Thesis · Grade 1.0</div>
       <div class="project-title">Hardware Performance Counter Unit</div>
@@ -215,6 +215,7 @@
       <button class="read-more-btn">Read more →</button>
     </div>
 
+    <!-- PROJECT 2 — RISC-V -->
     <div class="project-card" onclick="openRiscvModal()">
       <div class="project-year">TUM · Grade 1.1</div>
       <div class="project-title">RISC-V Processor Design</div>
@@ -223,13 +224,16 @@
       <button class="read-more-btn">Read more →</button>
     </div>
 
-    <div class="project-card">
+    <!-- PROJECT 3 — BASEBAND -->
+    <div class="project-card" onclick="openBasebandModal()">
       <div class="project-year">TUM · Grade 1.0</div>
       <div class="project-title">Baseband Processor Design</div>
-      <p class="project-desc">Developed a Verilog-based baseband processor implementing UART, Huffman coding, Viterbi decoding, and QAM modulation. Verified end-to-end on FPGA hardware.</p>
-      <div class="project-tags"><span class="tag">Verilog</span><span class="tag">FPGA</span><span class="tag">DSP</span><span class="tag">QAM</span></div>
+      <p class="project-desc">Developed a Verilog-based baseband processor implementing UART, Huffman coding, Viterbi channel coding, and 16-QAM modulation. Verified end-to-end via simulation and on FPGA hardware using Vivado ILA.</p>
+      <div class="project-tags"><span class="tag">Verilog</span><span class="tag">FPGA</span><span class="tag">DSP</span><span class="tag">QAM</span><span class="tag">Huffman</span></div>
+      <button class="read-more-btn">Read more →</button>
     </div>
 
+    <!-- PROJECT 4 — RTL2GDS -->
     <div class="project-card">
       <div class="project-year">TUM · MACHT-AI</div>
       <div class="project-title">16nm FinFET TSMC RTL2GDS</div>
@@ -326,7 +330,6 @@
   <h3>Overview</h3>
   <p>A fully functional CPU was designed and implemented in VHDL by a group of four students, strictly following a reduced RISC-V Instruction Set Architecture specification. The processor features a <strong>partially pipelined architecture</strong> — starting from a single-cycle baseline and progressively introducing pipelining — with a clean separation between the datapath and the control unit.</p>
 
-  <!-- Architecture diagram -->
   <div class="diagram-wrap" style="background:#f0ede8;">
     <img src="riscv-arch.png" id="riscvDiagram" style="width:100%;border-radius:2px;" alt="RISC-V processor architecture diagram"/>
     <div class="diagram-caption">System architecture: Datapath (ALU, Register File, Flags), Controller with FSM-based instruction decode, and Memory interface with input/output devices.</div>
@@ -352,7 +355,7 @@
 </div>
 </div>
 
-<!-- ===== MODAL ===== -->
+<!-- ===== PCU MODAL ===== -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
 <div class="modal" id="modalBox">
   <button class="modal-close" onclick="closeModal()">✕</button>
@@ -370,10 +373,8 @@
   <p>This thesis was conducted within the <strong>CeCaS (Central Car Server)</strong> project — a national German research initiative involving 28 partners (including Infineon Technologies, Fraunhofer Institutes, and TUM) developing next-generation automotive computing platforms.</p>
   <p>At the heart of the problem is the <em>memory wall</em>: modern embedded processors far outpace off-chip DRAM bandwidth, and automotive systems compound this by adding hardware encryption and integrity checking to every memory transaction. To mask these latencies, TUM's Chair of Integrated Systems developed the <strong>SASSMC</strong> (Self-Adaptive Safe and Secure Memory Controller), which includes a hardware-based Preload Unit that proactively fetches 1 KB data pages into an on-chip SRAM buffer ahead of demand.</p>
 
-  <!-- DIAGRAM 1: System Architecture -->
   <div class="diagram-wrap">
     <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'Helvetica Neue',sans-serif;font-size:11px;">
-      <!-- CPU cores -->
       <g>
         <rect x="10" y="10" width="52" height="26" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
         <text x="36" y="27" text-anchor="middle" fill="#5c4f40">CPU + L1</text>
@@ -384,24 +385,18 @@
         <rect x="10" y="106" width="52" height="26" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
         <text x="36" y="123" text-anchor="middle" fill="#5c4f40">CPU + L1</text>
       </g>
-      <!-- L2 -->
       <rect x="80" y="42" width="52" height="90" rx="2" fill="#ddd5c4" stroke="#a0876e" stroke-width="1"/>
       <text x="106" y="84" text-anchor="middle" fill="#5c4f40">Shared</text>
       <text x="106" y="98" text-anchor="middle" fill="#5c4f40">L2</text>
-      <!-- arrows cpu→l2 -->
       <line x1="62" y1="23" x2="80" y2="60" stroke="#a0876e" stroke-width="1" marker-end="url(#arr)"/>
       <line x1="62" y1="55" x2="80" y2="75" stroke="#a0876e" stroke-width="1" marker-end="url(#arr)"/>
       <line x1="62" y1="87" x2="80" y2="90" stroke="#a0876e" stroke-width="1" marker-end="url(#arr)"/>
       <line x1="62" y1="119" x2="80" y2="105" stroke="#a0876e" stroke-width="1" marker-end="url(#arr)"/>
-      <!-- arrow l2→sassmc -->
       <line x1="132" y1="87" x2="160" y2="87" stroke="#a0876e" stroke-width="1.5" marker-end="url(#arr)"/>
-      <!-- SASSMC box -->
       <rect x="160" y="10" width="300" height="160" rx="3" fill="none" stroke="#7a6652" stroke-width="1.5" stroke-dasharray="5,3"/>
       <text x="310" y="175" text-anchor="middle" fill="#7a6652" font-size="10" letter-spacing="1">SASSMC</text>
-      <!-- Preload Unit inner -->
       <rect x="170" y="20" width="160" height="140" rx="2" fill="#f5f0e8" stroke="#a0876e" stroke-width="1"/>
       <text x="250" y="36" text-anchor="middle" fill="#7a6652" font-size="10" font-weight="bold">Preload Unit</text>
-      <!-- inner blocks -->
       <rect x="182" y="44" width="66" height="22" rx="2" fill="#e8dfd2" stroke="#bbb0a0" stroke-width="1"/>
       <text x="215" y="59" text-anchor="middle" fill="#5c4f40" font-size="9">Main FSM</text>
       <rect x="262" y="44" width="56" height="22" rx="2" fill="#e8dfd2" stroke="#bbb0a0" stroke-width="1"/>
@@ -410,25 +405,19 @@
       <text x="215" y="93" text-anchor="middle" fill="#5c4f40" font-size="9">Addr. Mgr.</text>
       <rect x="262" y="78" width="56" height="22" rx="2" fill="#e8dfd2" stroke="#bbb0a0" stroke-width="1"/>
       <text x="290" y="93" text-anchor="middle" fill="#5c4f40" font-size="9">Queue Mgr.</text>
-      <!-- PCU highlighted -->
       <rect x="182" y="114" width="136" height="36" rx="2" fill="#c9b89e" stroke="#7a6652" stroke-width="1.5"/>
       <text x="250" y="130" text-anchor="middle" fill="#3a2e22" font-size="9" font-weight="bold">Performance Counter Unit</text>
       <text x="250" y="143" text-anchor="middle" fill="#3a2e22" font-size="8">(PCU — this thesis)</text>
-      <!-- Encrypter -->
       <rect x="348" y="44" width="80" height="40" rx="2" fill="#ede7d9" stroke="#a0876e" stroke-width="1"/>
       <text x="388" y="62" text-anchor="middle" fill="#5c4f40">Encrypt/</text>
       <text x="388" y="75" text-anchor="middle" fill="#5c4f40">Decrypt</text>
-      <!-- Mem Ctrl -->
       <rect x="348" y="100" width="80" height="30" rx="2" fill="#ede7d9" stroke="#a0876e" stroke-width="1"/>
       <text x="388" y="119" text-anchor="middle" fill="#5c4f40">Mem Ctrl</text>
-      <!-- DDR -->
       <rect x="490" y="100" width="60" height="30" rx="2" fill="#ddd5c4" stroke="#a0876e" stroke-width="1"/>
       <text x="520" y="119" text-anchor="middle" fill="#5c4f40">DDR3</text>
-      <!-- arrows -->
       <line x1="330" y1="64" x2="348" y2="64" stroke="#a0876e" stroke-width="1" marker-end="url(#arr)"/>
       <line x1="388" y1="84" x2="388" y2="100" stroke="#a0876e" stroke-width="1" marker-end="url(#arr)"/>
       <line x1="428" y1="115" x2="490" y2="115" stroke="#a0876e" stroke-width="1" marker-end="url(#arr)"/>
-      <!-- debug -->
       <rect x="348" y="144" width="80" height="22" rx="2" fill="#c9b89e" stroke="#7a6652" stroke-width="1.5"/>
       <text x="388" y="159" text-anchor="middle" fill="#3a2e22" font-size="9" font-weight="bold">PCU Debug I/F</text>
       <line x1="250" y1="150" x2="348" y2="155" stroke="#7a6652" stroke-width="1.2" stroke-dasharray="3,2"/>
@@ -464,10 +453,8 @@
     <div class="metric-item"><div class="m-id">M10</div><div class="m-name">Queue Fill Behavior</div><div style="font-size:.77rem;color:var(--muted);margin-top:.3rem;line-height:1.6;">To assess whether the preload queue operates near saturation or stays underutilized, and whether overwrite events occur under high memory pressure.</div></div>
   </div>
 
-  <!-- DIAGRAM 2: PCU signal flow -->
   <div class="diagram-wrap">
     <svg viewBox="0 0 620 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'Helvetica Neue',sans-serif;font-size:10px;">
-      <!-- 4 source blocks -->
       <rect x="10" y="20" width="80" height="30" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
       <text x="50" y="39" text-anchor="middle" fill="#5c4f40">Main FSM</text>
       <rect x="10" y="62" width="80" height="30" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
@@ -476,29 +463,23 @@
       <text x="150" y="39" text-anchor="middle" fill="#5c4f40">Addr. Mgr.</text>
       <rect x="110" y="62" width="80" height="30" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
       <text x="150" y="81" text-anchor="middle" fill="#5c4f40">Queue Mgr.</text>
-      <!-- snoop arrows -->
       <line x1="90" y1="35" x2="220" y2="55" stroke="#a0876e" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arr2)"/>
       <line x1="90" y1="77" x2="220" y2="65" stroke="#a0876e" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arr2)"/>
       <line x1="190" y1="35" x2="220" y2="55" stroke="#a0876e" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arr2)"/>
       <line x1="190" y1="77" x2="220" y2="65" stroke="#a0876e" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arr2)"/>
-      <!-- PCU -->
       <rect x="220" y="30" width="120" height="60" rx="2" fill="#c9b89e" stroke="#7a6652" stroke-width="1.5"/>
       <text x="280" y="55" text-anchor="middle" fill="#3a2e22" font-weight="bold">PCU</text>
       <text x="280" y="70" text-anchor="middle" fill="#3a2e22" font-size="9">10 metric groups</text>
       <text x="280" y="82" text-anchor="middle" fill="#3a2e22" font-size="9">non-intrusive</text>
-      <!-- arrow to debug -->
       <line x1="340" y1="60" x2="380" y2="60" stroke="#7a6652" stroke-width="1.5" marker-end="url(#arr2)"/>
-      <!-- debug -->
       <rect x="380" y="30" width="100" height="60" rx="2" fill="#c9b89e" stroke="#7a6652" stroke-width="1.5"/>
       <text x="430" y="55" text-anchor="middle" fill="#3a2e22" font-weight="bold">Debug I/F</text>
       <text x="430" y="70" text-anchor="middle" fill="#3a2e22" font-size="9">AHB Slave</text>
       <text x="430" y="82" text-anchor="middle" fill="#3a2e22" font-size="9">0xFFE02xxx</text>
-      <!-- arrow to SW -->
       <line x1="480" y1="60" x2="520" y2="60" stroke="#a0876e" stroke-width="1.5" marker-end="url(#arr2)"/>
       <rect x="520" y="40" width="80" height="40" rx="2" fill="#ede7d9" stroke="#a0876e" stroke-width="1"/>
       <text x="560" y="58" text-anchor="middle" fill="#5c4f40">Software</text>
       <text x="560" y="71" text-anchor="middle" fill="#5c4f40">(C / Python)</text>
-      <!-- snoop label -->
       <text x="148" y="15" text-anchor="middle" fill="#a0876e" font-size="9" font-style="italic">passive signal snoop (no control path)</text>
       <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#a0876e"/></marker></defs>
     </svg>
@@ -523,7 +504,99 @@
 </div>
 </div>
 
+<!-- ===== BASEBAND MODAL ===== -->
+<div class="modal-overlay" id="basebandModalOverlay" onclick="closeBasebandModalOutside(event)">
+<div class="modal" id="basebandModalBox">
+  <button class="modal-close" onclick="closeBasebandModal()">✕</button>
+
+  <div class="modal-label">Lab Course · TUM Chair of EDA · Verilog · 2024</div>
+  <h2>Hardware Implementation of a Simplified Baseband Processor</h2>
+  <div class="modal-meta">Grade: 1.0 &nbsp;·&nbsp; Verilog / SystemVerilog &nbsp;·&nbsp; Xilinx Spartan-7 (xc7s25)</div>
+
+  <h3>Overview</h3>
+  <p>This project involved designing and verifying a complete <strong>baseband signal processing chain</strong> in Verilog, from serial data reception all the way through source compression, channel coding, and digital modulation. The system was implemented module by module, verified through behavioral simulation, and then deployed and tested end-to-end on a physical FPGA board.</p>
+  <p>A Python program running on the host PC communicated with the FPGA over a UART serial link, supplying input data and checking the returned results — making the verification fully automated and hardware-in-the-loop.</p>
+
+  <div class="diagram-wrap">
+    <img src="baseband-overview.png" style="width:100%;border-radius:2px;" alt="Baseband processor block diagram"/>
+    <div class="diagram-caption">End-to-end block diagram of the baseband processor. Data flows from UART Rx through Huffman compression, a FIFO, Viterbi channel coding, and 16-QAM modulation, before being transmitted back via UART Tx.</div>
+  </div>
+
+  <h3>System Architecture</h3>
+  <p>The processor is built as a pipeline of six distinct RTL modules, each with a clearly defined interface and handshake protocol. A 1-bit FIFO decouples the variable-rate Huffman output from the fixed-rate Viterbi encoder, and a dedicated UART echo path lets the host verify reception integrity before analyzing modulation results.</p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 660 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'Helvetica Neue',sans-serif;font-size:9.5px;">
+      <defs><marker id="ba" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#a0876e"/></marker></defs>
+      <!-- Blocks -->
+      <rect x="4"   y="33" width="74" height="34" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
+      <text x="41"  y="48" text-anchor="middle" fill="#5c4f40" font-weight="bold">UART Rx</text>
+      <text x="41"  y="61" text-anchor="middle" fill="#7a6652">9600 bps</text>
+
+      <rect x="90"  y="33" width="84" height="34" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
+      <text x="132" y="48" text-anchor="middle" fill="#5c4f40" font-weight="bold">Huffman</text>
+      <text x="132" y="61" text-anchor="middle" fill="#7a6652">Source Coding</text>
+
+      <rect x="186" y="33" width="52" height="34" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
+      <text x="212" y="48" text-anchor="middle" fill="#5c4f40" font-weight="bold">FIFO</text>
+      <text x="212" y="61" text-anchor="middle" fill="#7a6652">1-bit</text>
+
+      <rect x="250" y="33" width="84" height="34" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
+      <text x="292" y="48" text-anchor="middle" fill="#5c4f40" font-weight="bold">Viterbi</text>
+      <text x="292" y="61" text-anchor="middle" fill="#7a6652">Conv. Coding</text>
+
+      <rect x="346" y="33" width="74" height="34" rx="2" fill="#c9b89e" stroke="#7a6652" stroke-width="1.5"/>
+      <text x="383" y="48" text-anchor="middle" fill="#3a2e22" font-weight="bold">16-QAM</text>
+      <text x="383" y="61" text-anchor="middle" fill="#5c4f40">Modulation</text>
+
+      <rect x="432" y="33" width="74" height="34" rx="2" fill="#e8dfd2" stroke="#a0876e" stroke-width="1"/>
+      <text x="469" y="48" text-anchor="middle" fill="#5c4f40" font-weight="bold">UART Tx</text>
+      <text x="469" y="61" text-anchor="middle" fill="#7a6652">9600 bps</text>
+
+      <rect x="518" y="33" width="60" height="34" rx="2" fill="#ddd5c4" stroke="#a0876e" stroke-width="1"/>
+      <text x="548" y="53" text-anchor="middle" fill="#5c4f40">PC / Python</text>
+
+      <!-- Arrows -->
+      <line x1="78"  y1="50" x2="89"  y2="50" stroke="#a0876e" stroke-width="1.3" marker-end="url(#ba)"/>
+      <line x1="174" y1="50" x2="185" y2="50" stroke="#a0876e" stroke-width="1.3" marker-end="url(#ba)"/>
+      <line x1="238" y1="50" x2="249" y2="50" stroke="#a0876e" stroke-width="1.3" marker-end="url(#ba)"/>
+      <line x1="334" y1="50" x2="345" y2="50" stroke="#a0876e" stroke-width="1.3" marker-end="url(#ba)"/>
+      <line x1="420" y1="50" x2="431" y2="50" stroke="#a0876e" stroke-width="1.3" marker-end="url(#ba)"/>
+      <line x1="506" y1="50" x2="517" y2="50" stroke="#a0876e" stroke-width="1.3" marker-end="url(#ba)"/>
+      <!-- PC sends to UART Rx (curved top) -->
+      <path d="M548,33 Q548,10 41,10 Q41,10 41,33" fill="none" stroke="#a0876e" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#ba)"/>
+      <text x="294" y="8" text-anchor="middle" fill="#a0876e" font-size="8" font-style="italic">PC sends N symbols · receives echo + QAM results</text>
+    </svg>
+    <div class="diagram-caption">Full RTL pipeline. The FIFO decouples the variable-rate Huffman bitstream from the fixed-rate Viterbi encoder. The PC feedback loop (dashed) closes the verification loop end-to-end.</div>
+  </div>
+
+  <h3>Module Breakdown</h3>
+
+  <p><strong>UART Rx / Tx</strong> — The serial interface runs at 9600 bps against a 100 MHz system clock, requiring a bit-period counter of 10,417 cycles. The receiver samples each bit at mid-period (cycle 5,208) for maximum jitter tolerance, assembling the frame LSB-first and issuing a one-cycle <code>rec_full_byte</code> strobe on completion. A false-start guard aborts frames where the line returns high at the mid-start sample. The transmitter enforces a 20,000-cycle inter-byte guard interval before asserting <code>finish_tx</code>. Critically, the Tx first echoes the raw received input back to the PC before sending QAM results — letting the host verify UART reception integrity independently of the downstream processing chain.</p>
+
+  <p><strong>Huffman Encoder</strong> — The most algorithmically complex block, decomposed into three cooperating submodules. The <em>Sorter</em> implements a fully parallel pairwise comparator matrix: all symbol-frequency comparisons resolve within a single clock cycle, with ties broken by descending symbol index to guarantee a deterministic tree. The <em>Tree Constructor</em> drives this sorter each iteration from an FSM, maintaining a frequency pool array and per-symbol <code>(code, length, pool_id)</code> records — the pool_id tracking which merged subtree a character belongs to, avoiding any pointer structures. The <em>Encoder</em> then serializes each symbol's variable-length codeword MSB-first, asserting <code>wr_en</code> into the downstream FIFO for each valid bit.</p>
+
+  <p><strong>FIFO</strong> — A 1-bit-wide buffer that absorbs the bursty, variable-rate output of the Huffman encoder and presents a stable read interface to the Viterbi stage. Its <code>fifo_empty</code> / <code>fifo_rd_en</code> handshake prevents underflow during channel coding.</p>
+
+  <p><strong>Viterbi Convolutional Encoder</strong> — Implements a rate-½ convolutional code with two internal shift-register stages and two XOR-based output taps. Each input bit produces two encoded output bits; consecutive pairs are packed into 4-bit symbols for 16-QAM. After all FIFO data is consumed, two additional zero-padding steps flush the remaining register state, ensuring the full input sequence is recoverable by a decoder at the receiver.</p>
+
+  <p><strong>16-QAM Modulator</strong> — Maps each 4-bit symbol to an I/Q amplitude pair using a simple case-statement LUT. The upper two bits select the I component and the lower two the Q component, both drawn from the mapping <code>00→−3, 10→−1, 11→+1, 01→+3</code> (scaled by 1/√10), producing a standard Gray-coded constellation. <code>data_valid_o</code> is held high for exactly one cycle per valid symbol, synchronised to the Viterbi stage's <code>data_valid</code> pulse.</p>
+
+  <div class="highlight">
+    The Huffman sorter instantiates a fully parallel comparator matrix — all pairwise frequency comparisons resolve within a single clock cycle, trading LUT area for deterministic single-cycle latency per merge iteration, regardless of symbol-set size.
+  </div>
+
+  <h3>Verification Strategy</h3>
+  <p>Each module was first verified in isolation using dedicated testbenches in Vivado's behavioral simulator, with waveform inspection confirming handshake timing, counter behavior, and data correctness cycle-accurately. After individual sign-off, the full system was synthesized and implemented targeting the <strong>Xilinx Spartan-7 xc7s25csga324-1</strong> and programmed over JTAG. Vivado's <strong>Integrated Logic Analyzer (ILA)</strong> enabled on-chip debugging without external probes — internal signals were marked with <code>(* mark_debug = "true" *)</code> attributes, captured to a 1024-sample depth, and observed in real time against configurable trigger conditions. Final end-to-end correctness was confirmed by the Python host script, which independently compared the echoed input against the original transmission and validated the complete QAM output sequence.</p>
+
+  <div style="margin-top:1.5rem;">
+    <span class="tag">Verilog</span><span class="tag">SystemVerilog</span><span class="tag">FPGA</span><span class="tag">Xilinx Spartan-7</span><span class="tag">Huffman Coding</span><span class="tag">Viterbi</span><span class="tag">16-QAM</span><span class="tag">UART</span><span class="tag">ILA Debugging</span>
+  </div>
+</div>
+</div>
+
 <script>
+  // PCU Modal
   function openModal() {
     document.getElementById('modalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -535,6 +608,8 @@
   function closeModalOutside(e) {
     if (e.target === document.getElementById('modalOverlay')) closeModal();
   }
+
+  // RISC-V Modal
   function openRiscvModal() {
     document.getElementById('riscvModalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -546,8 +621,28 @@
   function closeRiscvModalOutside(e) {
     if (e.target === document.getElementById('riscvModalOverlay')) closeRiscvModal();
   }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeRiscvModal(); } });
 
+  // Baseband Modal
+  function openBasebandModal() {
+    document.getElementById('basebandModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeBasebandModal() {
+    document.getElementById('basebandModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeBasebandModalOutside(e) {
+    if (e.target === document.getElementById('basebandModalOverlay')) closeBasebandModal();
+  }
+
+  // Global escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeModal();
+      closeRiscvModal();
+      closeBasebandModal();
+    }
+  });
 </script>
 
 </body>
